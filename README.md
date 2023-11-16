@@ -1,16 +1,29 @@
 # foursquare_client
 
-A new Flutter project.
+Specialized Projects - Foursquare Client
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- [Flutter](https://flutter.dev/docs/get-started/install)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Build
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```sh
+flutter pub get
+dart run build_runner build lib/ --delete-conflicting-outputs
+flutter run
+```
+
+### Development
+
+```sh
+flutter pub get
+dart run build_runner watch lib/ --delete-conflicting-outputs
+```
+
+## Notes
+
+- We use `build_runner` to generate the code. Therefore, we need to run `dart run build_runner build` or `dart run build_runner watch` to generate the code before building the app.
+- If you use VSCode, we have a `tasks.json` file that will run `build_runner` for you. You can use `Ctrl+Shift+P` > `Run Task` > `buid-runner (Flutter): Watch` to run `build_runner` in watch mode.
