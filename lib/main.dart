@@ -3,13 +3,23 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'routes/homepage.dart';
+import 'client/homepage.dart';
+import 'signIn/signIn.dart'; //SignIn()
+import 'signIn/firstSignIn.dart'; //OnboardingPage()
 
 final _router = GoRouter(
   routes: [
     GoRoute(
-      path: '/',
+      path: '/homepage',
       builder: (context, state) => const Homepage(),
+    ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const OnboardingPage(),
+    ),
+    GoRoute(
+      path: '/signin',
+      builder: (context, state) => const SignIn(),
     ),
   ],
 );
