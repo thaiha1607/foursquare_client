@@ -3,8 +3,9 @@ import "package:flutter_hooks/flutter_hooks.dart";
 import "package:convex_bottom_bar/convex_bottom_bar.dart";
 import "package:foursquare_client/client/cart.dart";
 import "package:foursquare_client/client/chatbox.dart";
-import "package:foursquare_client/client/profile.dart";
+import "package:foursquare_client/client/productListSuccess.dart";
 import "package:foursquare_client/client/shopping.dart";
+import "package:foursquare_client/profile/profile_page.dart";
 
 class Homepage extends HookWidget {
   const Homepage({super.key});
@@ -19,7 +20,7 @@ class Homepage extends HookWidget {
       Container(alignment: Alignment.center, child: const Shopping()),
       Container(
         alignment: Alignment.center,
-        child: const Placeholder(),
+        child: const ProductListSuccess(),
       ),
       Container(
         alignment: Alignment.center,
@@ -63,11 +64,11 @@ class Homepage extends HookWidget {
       ),
       bottomNavigationBar: ConvexAppBar(
         items: const [
-          TabItem(icon: Icons.home_outlined, title: 'Home'),
-          TabItem(icon: Icons.receipt_outlined, title: 'Receipts'),
+          TabItem(icon: Icons.home_outlined, title: 'Trang chủ'),
+          TabItem(icon: Icons.receipt_outlined, title: 'Đơn hàng'),
           TabItem(icon: Icons.shopping_cart_outlined, title: 'Cart'),
-          TabItem(icon: Icons.chat_outlined, title: 'Chatbox'),
-          TabItem(icon: Icons.account_circle_outlined, title: 'Account'),
+          TabItem(icon: Icons.chat_outlined, title: 'Nhắn tin'),
+          TabItem(icon: Icons.account_circle_outlined, title: 'Tài khoản'),
         ],
         onTap: (int index) {
           currentPageIndex.value = index;

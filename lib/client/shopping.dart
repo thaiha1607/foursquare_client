@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './data/product.dart';
-import './cart.dart';
-import './detailProduct.dart';
+import 'package:foursquare_client/data/product.dart';
+import 'package:foursquare_client/client/cart.dart';
+import 'package:foursquare_client/client/detailProduct.dart';
 import 'package:flutter/services.dart';
 
 class Shopping extends StatelessWidget {
@@ -85,27 +85,32 @@ class ProductTile extends StatelessWidget {
       child: SizedBox(
         width: 150,
         child: Stack(
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProductImage(product: product),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              product.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              '\$${product.cost.toString()}',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .copyWith(color: Theme.of(context).colorScheme.secondary),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      '\$${product.cost.toString()}',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

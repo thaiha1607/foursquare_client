@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikchatbot/ikchatbot.dart';
 
-import './data/chat.dart';
+import '../data/chat.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       sendIcon: const Icon(Icons.send, color: Colors.black),
       userIcon: const Icon(Icons.animation, color: Colors.white),
       botIcon: const Icon(Icons.android, color: Colors.white),
-      botChatColor: Color.fromARGB(255, 104, 0, 101),
+      botChatColor: const Color.fromARGB(255, 104, 0, 101),
       delayBot: 100,
       closingTime: 1,
       delayResponse: 1,

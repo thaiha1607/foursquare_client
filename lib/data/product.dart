@@ -4,6 +4,7 @@ class Product {
   final double cost;
   final String? description;
   final List<String>? sizes;
+  late final Status? status;
 
   Product({
     required this.name,
@@ -11,7 +12,15 @@ class Product {
     required this.cost,
     this.description,
     this.sizes,
+    required this.status,
   });
+}
+
+enum Status {
+  ordered,
+  preparing,
+  shipping,
+  completed,
 }
 
 List<Product> products = [
@@ -24,6 +33,7 @@ List<Product> products = [
         'https://images-na.ssl-images-amazon.com/images/I/812T%2Bu00R4L._AC_UX466_.jpg'
       ],
       cost: 12.99,
+      status: null,
       sizes: ['S', 'M', 'L', 'XL']),
   Product(
     name: 'Short Sleeve Henley - Blue',
@@ -34,6 +44,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/91SH0RB-8dL._AC_UY606_.jpg'
     ],
     cost: 17.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -43,6 +54,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/61URnzIoCPL._AC_UX522_.jpg',
     ],
     cost: 24.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -52,6 +64,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/91Qpp%2BRPLtL._AC_UX522_.jpg',
     ],
     cost: 29.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -61,6 +74,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/91Mf37jbSvL._AC_UX522_.jpg',
     ],
     cost: 39.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -70,6 +84,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/71JYOHJ%2BS-L._AC_UX522_.jpg',
     ],
     cost: 19.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -79,6 +94,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/91WJgn0FNkL._AC_UX679_.jpg',
     ],
     cost: 29.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -88,6 +104,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/81LDpImWPAL._AC_UX522_.jpg',
     ],
     cost: 16.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -96,17 +113,18 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/71lDML8KDQL._AC_UX522_.jpg',
       'https://images-na.ssl-images-amazon.com/images/I/61Ojm-DnojL._AC_UY679_.jpg',
     ],
+    status: null,
     cost: 22.99,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
     name: 'Mid-Rise Skinny Jeans',
     imageUrls: [
-      //TODO links not working returning null
       'https://images-na.ssl-images-amazon.com/images/I/71canaWSlAL._AC_UX522_.jpg',
       'https://images-na.ssl-images-amazon.com/images/I/71zLzCwbXUL._AC_UX522_.jpg',
     ],
     cost: 28.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -116,6 +134,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/51sHwN6mDzL._AC_UX679_.jpg',
     ],
     cost: 34.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -125,6 +144,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/81qmkt1Be0L._AC_UY679_.jpg',
     ],
     cost: 34.99,
+    status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
   Product(
@@ -134,6 +154,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/71K1NzmHCfL._AC_SL1000_.jpg',
     ],
     cost: 9.99,
+    status: null,
   ),
   Product(
     name: 'Wobble Wag Giggle Ball',
@@ -142,6 +163,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/81Ye9KrP3pL._AC_SY355_.jpg',
     ],
     cost: 11.99,
+    status: null,
   ),
   Product(
     name: 'Duck Hide Twists',
@@ -150,6 +172,7 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/81z4lvRtc5L._SL1500_.jpg',
     ],
     cost: 8.99,
+    status: null,
   ),
   Product(
     name: "Zuke's Mini Training Treats",
@@ -158,5 +181,6 @@ List<Product> products = [
       'https://images-na.ssl-images-amazon.com/images/I/81K30Bs9C6L._AC_SY355_.jpg',
     ],
     cost: 10.99,
+    status: null,
   ),
 ];

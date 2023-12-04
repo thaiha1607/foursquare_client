@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import './data/product.dart';
-import './cart.dart';
+import 'package:foursquare_client/data/product.dart';
+import 'package:foursquare_client/client/cart.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({required this.product, Key? key}) : super(key: key);
@@ -152,8 +153,12 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
+                      'Mô tả sản phẩm',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  Text(
                     product.description ??
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis purus laoreet, efficitur libero vel, feugiat ante. Vestibulum tempor, ligula.',
+                        'Nếu không có description thì dòng này sẽ xuất hiện',
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!

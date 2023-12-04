@@ -25,8 +25,8 @@ final _router = GoRouter(
 );
 
 void main() {
-  runApp(ProviderScope(
-    child: const MyApp(),
+  runApp(const ProviderScope(
+    child: MyApp(),
   ));
 }
 
