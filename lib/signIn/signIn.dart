@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:foursquare_client/client/homepage.dart';
 
@@ -11,9 +13,9 @@ class SignIn extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: isSmallScreen
-                ? Column(
+                ? const Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       _Logo(),
                       _FormContent(),
                     ],
@@ -21,8 +23,8 @@ class SignIn extends StatelessWidget {
                 : Container(
                     padding: const EdgeInsets.all(32.0),
                     constraints: const BoxConstraints(maxWidth: 800),
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Expanded(child: _Logo()),
                         Expanded(
                           child: Center(child: _FormContent()),
@@ -53,10 +55,10 @@ class _Logo extends StatelessWidget {
             "Welcome to Foursquare!",
             textAlign: TextAlign.center,
             style: isSmallScreen
-                ? Theme.of(context).textTheme.headline5
+                ? Theme.of(context).textTheme.headlineSmall
                 : Theme.of(context)
                     .textTheme
-                    .headline4
+                    .headlineMedium
                     ?.copyWith(color: Colors.black),
           ),
         )

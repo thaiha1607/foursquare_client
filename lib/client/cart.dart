@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './data/product.dart';
+import 'package:foursquare_client/client/payment.dart';
+import 'package:foursquare_client/data/product.dart';
 
 final kGreyBackground = Colors.grey[200];
 
@@ -132,7 +133,14 @@ class _CartScreenState extends State<CartScreen> {
                   ],
                 ),
                 CallToActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              PaymentPage(paymentCost: cart.totalCost)),
+                    );
+                  },
                   labelText: 'Thanh Toán',
                   minSize: const Size(220, 45),
                 ),
@@ -223,7 +231,7 @@ class CartAppBarAction extends StatefulWidget {
 }
 
 class _CartAppBarActionState extends State<CartAppBarAction> {
-  // TODO: Setup cart to listen for changes based on your own state management. Could use riverpod, provider, bloc, etc..
+  // Setup cart to listen for changes based on your own state management. Could use riverpod, provider, bloc, etc..
   @override
   void initState() {
     cart.addListener(blankSetState);
