@@ -18,14 +18,15 @@ class DisplayImage extends StatelessWidget {
     const color = Color.fromRGBO(64, 105, 225, 1);
 
     return Center(
-        child: Stack(children: [
-      buildImage(color),
-      Positioned(
-        right: 4,
-        top: 10,
-        child: buildEditIcon(color),
-      )
-    ]));
+      child: Stack(children: [
+        buildImage(color),
+        Positioned(
+          right: 4,
+          top: 10,
+          child: buildEditIcon(color),
+        )
+      ]),
+    );
   }
 
   // Builds Profile Image
@@ -59,9 +60,10 @@ class DisplayImage extends StatelessWidget {
     required double all,
   }) =>
       ClipOval(
-          child: Container(
-        padding: EdgeInsets.all(all),
-        color: Colors.white,
-        child: child,
-      ));
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: Colors.white,
+          child: child,
+        ),
+      );
 }

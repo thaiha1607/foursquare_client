@@ -31,16 +31,17 @@ class ProfilePageState extends State<ProfilePage> {
             toolbarHeight: 10,
           ),
           InkWell(
-              onTap: () {
-                navigateSecondPage(const EditImagePage());
-              },
-              child: DisplayImage(
-                imagePath: user.image,
-                onPressed: () {},
-              )),
+            onTap: () {
+              navigateSecondPage(const EditImagePage());
+            },
+            child: DisplayImage(
+              imagePath: user.image,
+              onPressed: () {},
+            ),
+          ),
           buildUserInfoDisplay(user.name, 'Tên', const EditNameFormPage()),
           buildUserInfoDisplay(
-              user.phone, 'Số điện thoại', const EditPhoneFormPage()),
+              user.phone, 'Số điện thoại', EditPhoneFormPage()),
           buildUserInfoDisplay(user.email, 'Email', EditEmailFormPage()),
           buildUserInfoDisplay(
               user.address, 'Địa chỉ', const EditAddressFormPage()),
