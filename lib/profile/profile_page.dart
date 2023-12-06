@@ -39,12 +39,11 @@ class ProfilePageState extends State<ProfilePage> {
               onPressed: () {},
             ),
           ),
-          buildUserInfoDisplay(user.name, 'Tên', const EditNameFormPage()),
+          buildUserInfoDisplay(user.name, 'Tên', EditNameFormPage()),
           buildUserInfoDisplay(
               user.phone, 'Số điện thoại', EditPhoneFormPage()),
           buildUserInfoDisplay(user.email, 'Email', EditEmailFormPage()),
-          buildUserInfoDisplay(
-              user.address, 'Địa chỉ', const EditAddressFormPage()),
+          buildUserInfoDisplay(user.address, 'Địa chỉ', EditAddressFormPage()),
         ],
       ),
     );
