@@ -41,7 +41,7 @@ class ProfilePageState extends State<ProfilePage> {
           buildUserInfoDisplay(user.name, 'Tên', const EditNameFormPage()),
           buildUserInfoDisplay(
               user.phone, 'Số điện thoại', const EditPhoneFormPage()),
-          buildUserInfoDisplay(user.email, 'Email', const EditEmailFormPage()),
+          buildUserInfoDisplay(user.email, 'Email', EditEmailFormPage()),
           buildUserInfoDisplay(
               user.address, 'Địa chỉ', const EditAddressFormPage()),
         ],

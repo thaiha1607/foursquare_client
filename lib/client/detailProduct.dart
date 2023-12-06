@@ -153,9 +153,9 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                      'Mô tả sản phẩm',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
+                    'Mô tả sản phẩm',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                   Text(
                     product.description ??
                         'Nếu không có description thì dòng này sẽ xuất hiện',

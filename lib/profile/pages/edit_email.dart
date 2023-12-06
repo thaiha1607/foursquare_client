@@ -1,35 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import '../userData/user_data.dart';
 import '../widgets/appbar_widget.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:string_validator/string_validator.dart';
 
-// This class handles the Page to edit the Email Section of the User Profile.
-class EditEmailFormPage extends StatefulWidget {
-  const EditEmailFormPage({Key? key}) : super(key: key);
+class EditEmailFormPage extends HookWidget {
+  EditEmailFormPage({Key? key}) : super(key: key);
 
-  @override
-  EditEmailFormPageState createState() {
-    return EditEmailFormPageState();
-  }
-}
-
-class EditEmailFormPageState extends State<EditEmailFormPage> {
   final _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  var user = UserData.myUser;
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    super.dispose();
-  }
-
-  void updateUserValue(String email) {
-    user.email = email;
-  }
 
   @override
   Widget build(BuildContext context) {
+    var user = UserData.myUser;
+    final emailController = useTextEditingController();
+    updateUserInfo(String email) {
+      user.email = email;
+    }
+
     return Scaffold(
         appBar: buildAppBar(context),
         body: Form(
@@ -74,9 +61,8 @@ class EditEmailFormPageState extends State<EditEmailFormPage> {
                             onPressed: () {
                               // Validate returns true if the form is valid, or false otherwise.
                               if (_formKey.currentState!.validate() &&
-                                  EmailValidator.validate(
-                                      emailController.text)) {
-                                updateUserValue(emailController.text);
+                                  isEmail(emailController.text)) {
+                                updateUserInfo(emailController.text);
                                 Navigator.pop(context);
                               }
                             },
