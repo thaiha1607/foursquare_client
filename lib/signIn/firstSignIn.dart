@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-// TODO: Remake it
-
 import "package:flutter/material.dart";
 import "package:foursquare_client/signIn/signIn.dart";
 
@@ -97,8 +95,9 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                           ),
                         ),
                         Expanded(
-                            flex: 1,
-                            child: Column(children: [
+                          flex: 1,
+                          child: Column(
+                            children: [
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(item.title,
@@ -124,7 +123,9 @@ class _OnboardingPageState extends State<OnboardingPagePresenter> {
                                           color: item.textColor,
                                         )),
                               )
-                            ]))
+                            ],
+                          ),
+                        ),
                       ],
                     );
                   },
