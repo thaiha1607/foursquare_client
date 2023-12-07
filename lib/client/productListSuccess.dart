@@ -1,33 +1,23 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foursquare_client/client/payment.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../data/product.dart';
 
-class ProductListSuccess extends StatefulWidget {
+class ProductListSuccess extends HookConsumerWidget {
   const ProductListSuccess({Key? key}) : super(key: key);
 
   @override
-  State<ProductListSuccess> createState() => _TabBarExampleState();
-}
-
-class _TabBarExampleState extends State<ProductListSuccess>
-    with TickerProviderStateMixin {
-  late final TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tabController = useTabController(initialLength: 4);
+    var orderedProduct = ref.watch(orderedProductNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 0,
         bottom: TabBar(
-          controller: _tabController,
+          controller: tabController,
           tabs: const <Widget>[
             Tab(
               icon: Icon(Icons.shopping_bag_outlined),
@@ -49,18 +39,18 @@ class _TabBarExampleState extends State<ProductListSuccess>
         ),
       ),
       body: TabBarView(
-        controller: _tabController,
+        controller: tabController,
         children: [
-          buildProductList(Status.ordered),
-          buildProductList(Status.preparing),
-          buildProductList(Status.shipping),
-          buildProductList(Status.completed),
+          buildProductList(Status.ordered, orderedProduct),
+          buildProductList(Status.preparing, orderedProduct),
+          buildProductList(Status.shipping, orderedProduct),
+          buildProductList(Status.completed, orderedProduct),
         ],
       ),
     );
   }
 
-  Widget buildProductList(Status status) {
+  Widget buildProductList(Status status, List<Product> orderedProduct) {
     // Lọc danh sách sản phẩm dựa trên trạng thái
     List<Product> filteredProducts =
         orderedProduct.where((product) => product.status == status).toList();

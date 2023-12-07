@@ -1,57 +1,63 @@
 import 'dart:async';
 
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import './fadeanimation.dart';
 import './successPayment.dart';
 import 'package:flutter/material.dart';
 import './cart.dart';
 import '../data/product.dart';
 
-class PaymentPage extends StatefulWidget {
-  final double paymentCost;
+part 'payment.g.dart';
 
-  const PaymentPage({Key? key, required this.paymentCost}) : super(key: key);
-
+@riverpod
+class OrderedProductNotifier extends _$OrderedProductNotifier {
   @override
-  PaymentPageState createState() => PaymentPageState();
-}
-
-List<Product> orderedProduct = [];
-
-class PaymentPageState extends State<PaymentPage> {
-  // ship fee
-  double shippingFee = 10.0;
-  int activeCard = 0;
-  bool _isLoading = false;
-  late Timer timer;
-
-  pay() {
-    setState(() {
-      _isLoading = true;
-    });
-
-    const oneSec = Duration(milliseconds: 1);
-    timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        setState(() {
-          _isLoading = false;
-          timer.cancel();
-          // Chuyển trạng thái sản phẩm
-          for (var item in cart.itemsInCart) {
-            item.product.status = Status.ordered;
-            orderedProduct.add(item.product);
-          }
-          // Xóa hết sản phẩm ở trang Cart
-          cart.itemsInCart.clear();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const PaymentSuccess()));
-        });
-      },
-    );
+  List<Product> build() {
+    return [];
   }
 
+  void importFromCart(List<OrderItem> items) {
+    var orderedItem = <Product>[];
+    for (var item in items) {
+      orderedItem.add(item.product.copyWith(status: Status.ordered));
+    }
+    state = orderedItem;
+  }
+}
+
+class PaymentPage extends HookConsumerWidget {
+  const PaymentPage({Key? key, required this.paymentCost}) : super(key: key);
+  final double paymentCost;
+  static const double shippingFee = 10.0;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var activeCard = useState(0);
+    var isLoading = useState(false);
+    var cart = ref.watch(cartNotifierProvider);
+    payAction() {
+      isLoading.value = true;
+
+      const oneSec = Duration(milliseconds: 1);
+      Timer.periodic(
+        oneSec,
+        (Timer timer) {
+          isLoading.value = false;
+          timer.cancel();
+          // Chuyển trạng thái sản phẩm
+          ref
+              .read(orderedProductNotifierProvider.notifier)
+              .importFromCart(cart);
+          ref.read(cartNotifierProvider.notifier).clear();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const PaymentSuccess()));
+        },
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -70,12 +76,12 @@ class PaymentPageState extends State<PaymentPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                activeCard == 0
+                activeCard.value == 0
                     ? FadeAnimation(
                         1.2,
                         AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
-                          opacity: activeCard == 0 ? 1 : 0,
+                          opacity: activeCard.value == 0 ? 1 : 0,
                           child: Container(
                             width: double.infinity,
                             height: 200,
@@ -135,7 +141,7 @@ class PaymentPageState extends State<PaymentPage> {
                         1.2,
                         AnimatedOpacity(
                           duration: const Duration(milliseconds: 500),
-                          opacity: activeCard == 1 ? 1 : 0,
+                          opacity: activeCard.value == 1 ? 1 : 0,
                           child: Container(
                             width: double.infinity,
                             height: 200,
@@ -207,9 +213,7 @@ class PaymentPageState extends State<PaymentPage> {
                     Row(children: [
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            activeCard = 0;
-                          });
+                          activeCard.value = 0;
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
@@ -217,7 +221,7 @@ class PaymentPageState extends State<PaymentPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18),
-                            border: activeCard == 0
+                            border: activeCard.value == 0
                                 ? Border.all(
                                     color: Colors.grey.shade300, width: 1)
                                 : Border.all(
@@ -232,9 +236,7 @@ class PaymentPageState extends State<PaymentPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          setState(() {
-                            activeCard = 1;
-                          });
+                          activeCard.value = 1;
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
@@ -242,7 +244,7 @@ class PaymentPageState extends State<PaymentPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18),
-                            border: activeCard == 1
+                            border: activeCard.value == 1
                                 ? Border.all(
                                     color: Colors.grey.shade300, width: 1)
                                 : Border.all(
@@ -350,7 +352,7 @@ class PaymentPageState extends State<PaymentPage> {
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),
                         Text(
-                            "${(cart.totalCost + shippingFee).toStringAsFixed(2)} VNĐ",
+                            "${(CartScreen.totalCost(cart) + shippingFee).toStringAsFixed(2)} VNĐ",
                             style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -361,10 +363,10 @@ class PaymentPageState extends State<PaymentPage> {
                 FadeAnimation(
                   1.4,
                   MaterialButton(
-                    onPressed: _isLoading
+                    onPressed: isLoading.value
                         ? null
                         : () {
-                            pay();
+                            payAction();
                           },
                     height: 50,
                     elevation: 0,
@@ -373,7 +375,7 @@ class PaymentPageState extends State<PaymentPage> {
                         borderRadius: BorderRadius.circular(10)),
                     color: Colors.blue,
                     child: Center(
-                      child: _isLoading
+                      child: isLoading.value
                           ? const SizedBox(
                               width: 20,
                               height: 20,

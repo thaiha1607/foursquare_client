@@ -1,43 +1,27 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:foursquare_client/data/product.dart';
 import 'package:foursquare_client/client/cart.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProductScreen extends StatefulWidget {
+class ProductScreen extends HookConsumerWidget {
   const ProductScreen({required this.product, Key? key}) : super(key: key);
   final Product product;
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    var selectedImageUrl = useState(product.imageUrls.first);
+    var selectedSize = useState(product.sizes?.first);
+    void setSelectedImageUrl(String url) {
+      selectedImageUrl.value = url;
+    }
 
-class _ProductScreenState extends State<ProductScreen> {
-  Product get product => widget.product;
-  String? selectedImageUrl;
-  String? selectedSize;
+    void setSelectedSize(String size) {
+      selectedSize.value = size;
+    }
 
-  @override
-  void initState() {
-    selectedImageUrl = product.imageUrls.first;
-    selectedSize = product.sizes?.first;
-    super.initState();
-  }
-
-  void setSelectedImageUrl(String url) {
-    setState(() {
-      selectedImageUrl = url;
-    });
-  }
-
-  void setSelectedSize(String size) {
-    setState(() {
-      selectedSize = size;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> imagePreviews = product.imageUrls
+    var imagePreviews = product.imageUrls
         .map(
           (url) => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -49,7 +33,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: selectedImageUrl == url
+                  border: selectedImageUrl.value == url
                       ? Border.all(
                           color: Theme.of(context).colorScheme.secondary,
                           width: 1.75)
@@ -65,7 +49,7 @@ class _ProductScreenState extends State<ProductScreen> {
         )
         .toList();
 
-    List<Widget> sizeSelectionWidgets = product.sizes
+    var sizeSelectionWidgets = product.sizes
             ?.map(
               (s) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -77,7 +61,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     height: 42,
                     width: 38,
                     decoration: BoxDecoration(
-                      color: selectedSize == s
+                      color: selectedSize.value == s
                           ? Theme.of(context).colorScheme.secondary
                           : null,
                       border: Border.all(
@@ -90,7 +74,8 @@ class _ProductScreenState extends State<ProductScreen> {
                       child: Text(
                         s,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: selectedSize == s ? Colors.white : null),
+                            color:
+                                selectedSize.value == s ? Colors.white : null),
                       ),
                     ),
                   ),
@@ -111,16 +96,16 @@ class _ProductScreenState extends State<ProductScreen> {
         children: [
           Container(
             height: MediaQuery.of(context).size.height * .35,
-            color: kGreyBackground,
+            color: Colors.grey[200],
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Image.network(
-                    selectedImageUrl!,
+                    selectedImageUrl.value,
                     fit: BoxFit.cover,
-                    color: kGreyBackground,
+                    color: Colors.grey[200],
                     colorBlendMode: BlendMode.multiply,
                   ),
                 ),
@@ -180,12 +165,13 @@ class _ProductScreenState extends State<ProductScreen> {
                   const Spacer(),
                   Center(
                     child: CallToActionButton(
-                      onPressed: () => cart.add(
-                        OrderItem(
-                          product: product,
-                          selectedSize: selectedSize,
-                        ),
-                      ),
+                      onPressed: () =>
+                          ref.read(cartNotifierProvider.notifier).addItem(
+                                OrderItem(
+                                  product: product,
+                                  selectedSize: selectedSize.value,
+                                ),
+                              ),
                       labelText: 'Thêm vào giỏ hàng',
                     ),
                   )

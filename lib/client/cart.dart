@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:foursquare_client/client/payment.dart';
-import 'package:foursquare_client/data/product.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final kGreyBackground = Colors.grey[200];
+import '../data/product.dart';
 
-class CartScreen extends StatefulWidget {
-  final bool isAppBarVisible;
+part 'cart.g.dart';
+
+class CartScreen extends ConsumerWidget {
   const CartScreen({Key? key, required this.isAppBarVisible}) : super(key: key);
+  final bool isAppBarVisible;
 
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
-  @override
-  void initState() {
-    super.initState();
-    cart.addListener(updateState);
+  static double totalCost(List<OrderItem> itemsInCart) {
+    double total = 0;
+    for (var item in itemsInCart) {
+      total += item.product.cost;
+    }
+    return total;
   }
 
   @override
-  void dispose() {
-    cart.removeListener(updateState);
-    super.dispose();
-  }
-
-  void updateState() => setState(() {});
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> orderItemRows = cart.itemsInCart
+  Widget build(BuildContext context, WidgetRef ref) {
+    var cart = ref.watch(cartNotifierProvider);
+    List<Widget> orderItemRows = cart
         .map(
           (item) => Row(
             children: [
@@ -64,7 +57,8 @@ class _CartScreenState extends State<CartScreen> {
               ),
               IconButton(
                 icon: const Icon(Icons.close),
-                onPressed: () => cart.remove(item),
+                onPressed: () =>
+                    ref.read(cartNotifierProvider.notifier).removeItem(item),
                 color: Colors.red,
               )
             ],
@@ -73,7 +67,7 @@ class _CartScreenState extends State<CartScreen> {
         .toList();
 
     return Scaffold(
-      appBar: widget.isAppBarVisible
+      appBar: isAppBarVisible
           ? AppBar(
               leading: IconButton(
                 icon: const Icon(Icons.close),
@@ -84,7 +78,7 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   const Text('Giỏ hàng'),
                   Text(
-                    '${cart.itemsInCart.length} sản phẩm',
+                    '${ref.watch(cartNotifierProvider.select((value) => value.length))} sản phẩm',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
@@ -127,7 +121,7 @@ class _CartScreenState extends State<CartScreen> {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Text(
-                      '${cart.totalCost.toStringAsFixed(2)} VNĐ',
+                      '${totalCost(cart).toStringAsFixed(2)} VNĐ',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
@@ -138,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              PaymentPage(paymentCost: cart.totalCost)),
+                              PaymentPage(paymentCost: totalCost(cart))),
                     );
                   },
                   labelText: 'Thanh Toán',
@@ -154,29 +148,23 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-Cart cart = Cart();
-
-class Cart with ChangeNotifier {
-  List<OrderItem> itemsInCart = [];
-
-  double get totalCost {
-    double total = 0;
-    for (var item in itemsInCart) {
-      total += item.product.cost;
-    }
-    return total;
+@riverpod
+class CartNotifier extends _$CartNotifier {
+  @override
+  List<OrderItem> build() {
+    return [];
   }
 
-  void add(OrderItem orderItem) {
-    itemsInCart.add(orderItem);
-    notifyListeners();
+  void addItem(OrderItem orderItem) {
+    state = [...state, orderItem];
   }
 
-  void remove(OrderItem orderItem) {
-    // print(orderItem.product.name);
-    itemsInCart.remove(orderItem);
-    // print(t);
-    notifyListeners();
+  void removeItem(OrderItem orderItem) {
+    state = [...state]..remove(orderItem);
+  }
+
+  void clear() {
+    state = [];
   }
 }
 
@@ -223,33 +211,12 @@ class CallToActionButton extends StatelessWidget {
   }
 }
 
-class CartAppBarAction extends StatefulWidget {
-  const CartAppBarAction({Key? key}) : super(key: key);
+class CartAppBarAction extends HookConsumerWidget {
+  const CartAppBarAction({super.key});
 
   @override
-  State<CartAppBarAction> createState() => _CartAppBarActionState();
-}
-
-class _CartAppBarActionState extends State<CartAppBarAction> {
-  // Setup cart to listen for changes based on your own state management. Could use riverpod, provider, bloc, etc..
-  @override
-  void initState() {
-    cart.addListener(blankSetState);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    cart.removeListener(blankSetState);
-    super.dispose();
-  }
-
-  void blankSetState() {
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var cart = ref.watch(cartNotifierProvider);
     return IconButton(
       icon: Stack(
         alignment: Alignment.center,
@@ -257,7 +224,7 @@ class _CartAppBarActionState extends State<CartAppBarAction> {
           const Icon(
             Icons.shopping_cart,
           ),
-          if (cart.itemsInCart.isNotEmpty)
+          if (cart.isNotEmpty)
             Align(
               alignment: Alignment.topRight,
               child: Container(
@@ -277,7 +244,7 @@ class _CartAppBarActionState extends State<CartAppBarAction> {
                     ),
                     child: Center(
                       child: Text(
-                        cart.itemsInCart.length.toString(),
+                        cart.length.toString(),
                         style: const TextStyle(
                           fontSize: 8,
                         ),
@@ -332,7 +299,7 @@ class ProductImage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
-          color: kGreyBackground,
+          color: Colors.grey[200],
         ),
         clipBehavior: Clip.hardEdge,
         child: Image.network(
@@ -340,7 +307,7 @@ class ProductImage extends StatelessWidget {
           loadingBuilder: (_, child, loadingProgress) => loadingProgress == null
               ? child
               : const Center(child: CircularProgressIndicator()),
-          color: kGreyBackground,
+          color: Colors.grey[200],
           colorBlendMode: BlendMode.multiply,
         ),
       ),

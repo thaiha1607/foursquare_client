@@ -1,19 +1,17 @@
-class Product {
-  final String name;
-  final List<String> imageUrls;
-  final double cost;
-  final String? description;
-  final List<String>? sizes;
-  late final Status? status;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Product({
-    required this.name,
-    required this.imageUrls,
-    required this.cost,
-    this.description,
-    this.sizes,
-    required this.status,
-  });
+part 'product.freezed.dart';
+
+@freezed
+class Product with _$Product {
+  const factory Product({
+    required String name,
+    required List<String> imageUrls,
+    required double cost,
+    String? description,
+    required List<String>? sizes,
+    required Status? status,
+  }) = _Product;
 }
 
 enum Status {
@@ -24,7 +22,7 @@ enum Status {
 }
 
 List<Product> products = [
-  Product(
+  const Product(
       name: '2-Pack Crewneck T-Shirts - Black',
       imageUrls: [
         'https://images-na.ssl-images-amazon.com/images/I/91ieWhKe9AL._AC_UX569_.jpg',
@@ -35,7 +33,7 @@ List<Product> products = [
       cost: 12.99,
       status: null,
       sizes: ['S', 'M', 'L', 'XL']),
-  Product(
+  const Product(
     name: 'Short Sleeve Henley - Blue',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/81tpGc13OgL._AC_UX522_.jpg',
@@ -47,7 +45,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: 'Polo RL V-Neck',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/61m68nuygSL._AC_UX522_.jpg',
@@ -57,7 +55,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: 'Athletic-Fit Stretch Jeans',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/91SIuLNN%2BlL._AC_UY679_.jpg',
@@ -67,7 +65,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: "Levi's Original Jeans",
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/91L4zjZKF-L._AC_UX522_.jpg',
@@ -77,7 +75,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: '2-Pack Performance Shorts',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/A1lTY32j6gL._AC_UX679_.jpg',
@@ -87,7 +85,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: "Levi's Cargo Shorts",
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/915Io2JEUPL._AC_UX679_.jpg',
@@ -97,7 +95,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: '2-Pack Short-Sleeve Crewneck',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/911mb8PkHSL._AC_UX522_.jpg',
@@ -107,7 +105,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: 'Waffle Knit Tunic Blouse',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/71lDML8KDQL._AC_UX522_.jpg',
@@ -117,7 +115,7 @@ List<Product> products = [
     cost: 22.99,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: 'Mid-Rise Skinny Jeans',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/71canaWSlAL._AC_UX522_.jpg',
@@ -127,7 +125,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: "Levi's Straight 505 Jeans",
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/51D4eXuwKaL._AC_UX679_.jpg',
@@ -137,7 +135,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: "Levi's 715 Bootcut Jeans",
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/81QwSgeXHTL._AC_UX522_.jpg',
@@ -147,7 +145,7 @@ List<Product> products = [
     status: null,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
   ),
-  Product(
+  const Product(
     name: '3-Pack - Squeaky Plush Dog Toy',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/712YaF31-3L._AC_SL1000_.jpg',
@@ -155,8 +153,9 @@ List<Product> products = [
     ],
     cost: 9.99,
     status: null,
+    sizes: null,
   ),
-  Product(
+  const Product(
     name: 'Wobble Wag Giggle Ball',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/81XyqDXVwCL._AC_SX355_.jpg',
@@ -164,8 +163,9 @@ List<Product> products = [
     ],
     cost: 11.99,
     status: null,
+    sizes: null,
   ),
-  Product(
+  const Product(
     name: 'Duck Hide Twists',
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/51dS9c0xIdL._SX342_.jpg',
@@ -173,8 +173,9 @@ List<Product> products = [
     ],
     cost: 8.99,
     status: null,
+    sizes: null,
   ),
-  Product(
+  const Product(
     name: "Zuke's Mini Training Treats",
     imageUrls: [
       'https://images-na.ssl-images-amazon.com/images/I/81LV2CHtGKL._AC_SY355_.jpg',
@@ -182,5 +183,6 @@ List<Product> products = [
     ],
     cost: 10.99,
     status: null,
+    sizes: null,
   ),
 ];
