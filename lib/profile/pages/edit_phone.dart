@@ -6,7 +6,7 @@ import '../widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
 class EditPhoneFormPage extends StatefulWidget {
-  const EditPhoneFormPage({Key? key}) : super(key: key);
+  const EditPhoneFormPage({super.key});
   @override
   EditPhoneFormPageState createState() {
     return EditPhoneFormPageState();

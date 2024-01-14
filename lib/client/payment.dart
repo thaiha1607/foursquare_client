@@ -9,7 +9,7 @@ import '../data/product.dart';
 class PaymentPage extends StatefulWidget {
   final double paymentCost;
 
-  const PaymentPage({Key? key, required this.paymentCost}) : super(key: key);
+  const PaymentPage({super.key, required this.paymentCost});
 
   @override
   PaymentPageState createState() => PaymentPageState();

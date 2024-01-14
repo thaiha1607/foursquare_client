@@ -4,7 +4,7 @@ import '../widgets/appbar_widget.dart';
 
 // This class handles the Page to edit the Name Section of the User Profile.
 class EditAddressFormPage extends StatefulWidget {
-  const EditAddressFormPage({Key? key}) : super(key: key);
+  const EditAddressFormPage({super.key});
 
   @override
   EditAddressFormPageState createState() {

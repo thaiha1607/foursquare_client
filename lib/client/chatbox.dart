@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final IkChatBotConfig chatBotConfig;
 
-  const MyHomePage({Key? key, required this.chatBotConfig}) : super(key: key);
+  const MyHomePage({super.key, required this.chatBotConfig});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
-  const SearchBar({required this.onChanged, Key? key}) : super(key: key);
+  const SearchBar({required this.onChanged, super.key});
 
   final Function(String) onChanged;
 
@@ -68,4 +68,3 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 }
-

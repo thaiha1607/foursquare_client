@@ -5,7 +5,7 @@ import 'package:email_validator/email_validator.dart';
 
 // This class handles the Page to edit the Email Section of the User Profile.
 class EditEmailFormPage extends StatefulWidget {
-  const EditEmailFormPage({Key? key}) : super(key: key);
+  const EditEmailFormPage({super.key});
 
   @override
   EditEmailFormPageState createState() {

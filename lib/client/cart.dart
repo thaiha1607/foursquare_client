@@ -6,7 +6,7 @@ final kGreyBackground = Colors.grey[200];
 
 class CartScreen extends StatefulWidget {
   final bool isAppBarVisible;
-  const CartScreen({Key? key, required this.isAppBarVisible}) : super(key: key);
+  const CartScreen({super.key, required this.isAppBarVisible});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -197,8 +197,7 @@ class CallToActionButton extends StatelessWidget {
       {required this.onPressed,
       required this.labelText,
       this.minSize = const Size(266, 45),
-      Key? key})
-      : super(key: key);
+      super.key});
   final Function onPressed;
   final String labelText;
   final Size minSize;
@@ -224,7 +223,7 @@ class CallToActionButton extends StatelessWidget {
 }
 
 class CartAppBarAction extends StatefulWidget {
-  const CartAppBarAction({Key? key}) : super(key: key);
+  const CartAppBarAction({super.key});
 
   @override
   State<CartAppBarAction> createState() => _CartAppBarActionState();
@@ -318,9 +317,9 @@ void _pushScreen(
 
 class ProductImage extends StatelessWidget {
   const ProductImage({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   final Product product;
 

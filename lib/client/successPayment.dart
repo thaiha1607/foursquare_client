@@ -5,7 +5,7 @@ import 'package:foursquare_client/client/fadeanimation.dart';
 import 'package:flutter/material.dart';
 
 class PaymentSuccess extends StatefulWidget {
-  const PaymentSuccess({Key? key}) : super(key: key);
+  const PaymentSuccess({super.key});
 
   @override
   PaymentSuccessState createState() => PaymentSuccessState();

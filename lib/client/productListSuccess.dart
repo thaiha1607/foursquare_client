@@ -4,7 +4,7 @@ import 'package:foursquare_client/client/payment.dart';
 import '../data/product.dart';
 
 class ProductListSuccess extends StatefulWidget {
-  const ProductListSuccess({Key? key}) : super(key: key);
+  const ProductListSuccess({super.key});
 
   @override
   State<ProductListSuccess> createState() => _TabBarExampleState();

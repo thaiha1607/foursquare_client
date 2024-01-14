@@ -5,7 +5,7 @@ import 'package:foursquare_client/client/detailProduct.dart';
 import 'package:flutter/services.dart';
 
 class Shopping extends StatelessWidget {
-  const Shopping({Key? key}) : super(key: key);
+  const Shopping({super.key});
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -18,7 +18,7 @@ class Shopping extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class ProductRow extends StatelessWidget {
-  const ProductRow({required this.products, Key? key}) : super(key: key);
+  const ProductRow({required this.products, super.key});
   final List<Product> products;
 
   @override
@@ -68,7 +68,7 @@ class ProductRow extends StatelessWidget {
 }
 
 class ProductTile extends StatelessWidget {
-  const ProductTile({required this.product, Key? key}) : super(key: key);
+  const ProductTile({required this.product, super.key});
 
   final Product product;
 
